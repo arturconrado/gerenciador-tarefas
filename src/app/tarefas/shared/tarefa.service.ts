@@ -22,7 +22,7 @@ export class TarefaService {
   }
 
   buscarPorId(id: number): TarefaModel {
-    const tarefas : TarefaModel[] = this.listarTodos();
+    const tarefas: TarefaModel[] = this.listarTodos();
     return tarefas.find(tarefa => tarefa.id === id);
   }
 
