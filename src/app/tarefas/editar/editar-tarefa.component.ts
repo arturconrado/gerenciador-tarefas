@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {NgForm} from '@angular/forms';
+import {TarefaModel, TarefaService} from '../shared';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'app-editar-tarefa',
@@ -7,9 +10,25 @@ import { Component, OnInit } from '@angular/core';
 })
 export class EditarTarefaComponent implements OnInit {
 
-  constructor() { }
+  @ViewChild('formTarefa') formTarefa: NgForm;
+  tarefa: TarefaModel;
+
+  constructor(
+    private tarefaService: TarefaService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
+    let id = +this.route.snapshot.params['id'];
+    this.tarefa = this.tarefaService.buscarPorId(id);
+  }
+
+  atualizar(): void {
+    if (this.formTarefa.form.valid) {
+      this.tarefaService.atualizar(this.tarefa);
+      this.router.navigate(['/tarefas']);
+    }
   }
 
 }
